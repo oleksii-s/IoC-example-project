@@ -5,8 +5,26 @@ require __DIR__ . './../vendor/autoload.php';
 
 error_reporting(E_ALL);
 
-$request = new \Http\HttpRequest($_GET, $_POST, $_COOKIE, $_FILES, $_SERVER);
-$response = new \Http\HttpResponse();
+$environment = 'development';
+
+/**
+ * Register the error handler
+ */
+$whoops = new \Whoops\Run;
+if ($environment !== 'production') {
+	$whoops->pushHandler(new \Whoops\Handler\PrettyPageHandler);
+} else {
+	$whoops->pushHandler(function($e){
+			echo 'Friendly error page and send an email to the developer';
+		});
+}
+$whoops->register();
+
+$injector = include('Dependencies.php');
+
+$request = $injector->make('Http\HttpRequest');
+
+$response = $injector->make('Http\HttpResponse');
 
 foreach ($response->getHeaders() as $header) {
 	header($header);
@@ -36,7 +54,7 @@ switch ($routeInfo[0]) {
 		$method = $routeInfo[1][1];
 		$vars = $routeInfo[2];
 
-		$class = new $className;
+		$class = $injector->make($className);
 		$class->$method($vars);
 		break;
 }
