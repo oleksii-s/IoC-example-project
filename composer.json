@@ -15,7 +15,8 @@
 		"filp/whoops": ">=1.1.2",
 		"patricklouys/http": ">=1.1.0",
 		"nikic/fast-route": "dev-master",
-		"rdlowrey/auryn": "dev-master"
+		"rdlowrey/auryn": "dev-master",
+		"stefangabos/zebra_form": "dev-master"
 
 	},
 	"autoload": {

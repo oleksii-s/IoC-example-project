@@ -29,10 +29,10 @@ $response = $injector->make('Http\HttpResponse');
 foreach ($response->getHeaders() as $header) {
 	header($header);
 }
-$routeDefinitionCallback = function(\FastRoute\RouteCollector $rC) {
+$routeDefinitionCallback = function(\FastRoute\RouteCollector $routeCollector) {
  	$routes = include('Routes.php');
 	foreach ($routes as $route) {
-		$rC->addRoute($route[0], $route[1], $route[2]);
+		$routeCollector->addRoute($route[0], $route[1], $route[2]);
 	}
 };
 $dispatcher = \FastRoute\simpleDispatcher($routeDefinitionCallback);

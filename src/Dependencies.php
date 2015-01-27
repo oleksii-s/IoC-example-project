@@ -15,4 +15,11 @@ $injector->define('Http\HttpRequest', [
 $injector->alias('Http\Request', 'Http\HttpRequest');
 $injector->share('Http\HttpResponse');
 
+$injector->define('PDO', [
+		':dsn' => 'mysql:host=localhost;dbname=unit_db',
+		':username' => 'root',
+		':passwd' => 'root'
+	]);
+$injector->share('PDO');
+
 return $injector;
